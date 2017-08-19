@@ -8,11 +8,9 @@ RUN apk add --no-cache --update \
       wget && \
     rm -rf /var/cache/apk/*
 
-# Create users for Hadoop and Spark.
-RUN adduser -Ds /bin/bash hadoop
-RUN adduser -Ds /bin/bash spark
-
 # Hadoop
+# TODO: Move this to a different image this can use as a base.
+RUN adduser -Ds /bin/bash hadoop
 ARG HADOOP_VERSION=2.7.3
 ENV HADOOP_HOME /opt/hadoop
 ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
@@ -25,8 +23,20 @@ RUN mkdir -p $HADOOP_HOME && \
     rm -rf $HADOOP_HOME/share/doc && \
     chown -R hadoop:hadoop $HADOOP_HOME
 
+RUN apk add --no-cache --update git && \
+    rm -rf /var/cache/apk/*
+
+# Maven
+ENV MAVEN_HOME /opt/maven
+RUN mkdir -p $MAVEN_HOME && \
+    wget -q -O- --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 \
+      http://apache.cs.utah.edu/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz | \
+      tar -xz --strip 1 -C $MAVEN_HOME && \
+    ln -s $MAVEN_HOME/bin/mvn /usr/local/bin/mvn
+
 # Spark
-ARG SPARK_VERSION=2.2.0
+RUN adduser -Ds /bin/bash spark
+ARG SPARK_MINOR_VERSION=2.2
 ENV SPARK_HOME /opt/spark
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
 ENV PATH $PATH:${SPARK_HOME}/bin

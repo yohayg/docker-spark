@@ -2,7 +2,7 @@ templates:
   build: 'docker build -t {repository}:{tag} --build-arg HADOOP_VERSION={hadoop_version} --build-arg SPARK_VERSION={spark_version} {context}'
   push: 'docker push {repository}:{tag}'
 contexts:
-  .:
+  stable:
     key_name: spark_version
     defaults:
       repository: aa8y/spark
@@ -38,3 +38,23 @@ contexts:
         spark_version: 2.2.0
       'latest':
         spark_version: 2.2.0
+  edge:
+    key_name: tag
+    defaults:
+      repository: aa8y/spark
+      hadoop_version: 2.7.3
+    tags:
+      edge-1.5:
+        branch: branch-1.5
+        hadoop_version: 2.6.5
+      edge-1.6:
+        branch: branch-1.6
+        hadoop_version: 2.6.5
+      edge-2.0:
+        branch: branch-2.0
+      edge-2.1:
+        branch: branch-2.1
+      edge-2.2:
+        branch: branch-2.2
+      edge:
+        branch: master
