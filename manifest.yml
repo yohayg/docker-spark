@@ -1,12 +1,16 @@
-templates:
-  build: 'docker build -t {repository}:{tag} --build-arg HADOOP_VERSION={hadoop_version} --build-arg SPARK_VERSION={spark_version} {context}'
-  push: 'docker push {repository}:{tag}'
+defaults:
+  parameters:
+    repository: aa8y/spark
+    hadoop_version: 2.7.3
+  templates:
+    push: docker push {repository}:{tag}
 contexts:
   stable:
     key_name: spark_version
-    defaults:
-      repository: aa8y/spark
-      hadoop_version: 2.7.3
+    templates:
+      build: >
+        docker build -t {repository}:{tag} --build-arg HADOOP_VERSION={hadoop_version}
+          --build-arg SPARK_VERSION={spark_version} {context}
     tags:
       '1.6.0':
         hadoop_version: 2.6.5
@@ -39,14 +43,13 @@ contexts:
       'latest':
         spark_version: 2.2.0
   edge:
-    key_name: tag
-    defaults:
-      repository: aa8y/spark
-      hadoop_version: 2.7.3
+    parameters:
+      maven_version: 3.5.0
+    templates:
+      build: >
+        docker build -t {repository}:{tag} --build-arg HADOOP_VERSION={hadoop_version}
+          --build-arg MAVEN_VERSION={maven_version} --build-arg SPARK_BRANCH={branch} {context}
     tags:
-      edge-1.5:
-        branch: branch-1.5
-        hadoop_version: 2.6.5
       edge-1.6:
         branch: branch-1.6
         hadoop_version: 2.6.5
