@@ -1,0 +1,3 @@
+[submodule "docker-helper"]
+	path = _helper
+	url = git@github.com:aa8y/docker-helper.git
