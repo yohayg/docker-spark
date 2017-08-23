@@ -32,6 +32,12 @@ Newer Edge tags have been added. These tags build Spark from the source and henc
 
 You can always refer to the `manifest.yml` file for more information about the images being built (see below).
 
+### Dockerfiles
+
+This is for the benefit of Docker Hub where you cannot host multiple `Dockerfile`s.
+* [Stable](https://github.com/aa8y/docker-spark/blob/master/stable/Dockerfile)
+* [Edge](https://github.com/aa8y/docker-spark/blob/master/edge/Dockerfile)
+
 ### Building / Pushing / Tagging docker images
 
 The project uses [Docker Helper](https://github.com/aa8y/docker-helper) which I wrote to manage docker images since I felt that the automated build system is inadequalte. It has been added as a `git submodule`. So if you fork the repository and want to build your own images, change the `manifest.yml` file, run `git submodule init`, `git submodule update` and use the build script.

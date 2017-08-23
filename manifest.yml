@@ -43,12 +43,10 @@ contexts:
       'latest':
         spark_version: 2.2.0
   edge:
-    parameters:
-      maven_version: 3.5.0
     templates:
       build: >
         docker build -t {repository}:{tag} --build-arg HADOOP_VERSION={hadoop_version}
-          --build-arg MAVEN_VERSION={maven_version} --build-arg SPARK_BRANCH={branch} {context}
+          --build-arg SPARK_BRANCH={branch} {context}
     tags:
       edge-1.6:
         branch: branch-1.6
