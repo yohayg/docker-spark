@@ -27,6 +27,7 @@ RUN adduser -Ds /bin/bash spark
 ENV SPARK_HOME /opt/spark
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
 ENV PATH $PATH:${SPARK_HOME}/bin
+ARG SCALA_VERSION=2.11
 ARG SPARK_BRANCH=master
 RUN mkdir -p $SPARK_HOME && \
     apk add --no-cache --update \
@@ -37,15 +38,16 @@ RUN mkdir -p $SPARK_HOME && \
     git clone -b $SPARK_BRANCH https://github.com/apache/spark.git $SPARK_HOME && \
     cd $SPARK_HOME && \
     export AMPLAB_JENKINS=true && \
-    build/mvn -DskipTests clean package && \
+    ./dev/change-scala-version.sh $SCALA_VERSION && \
+    ./build/mvn -DskipTests clean package && \
     apk del --purge \
       ca-certificates \
       git \
       maven \
       wget && \
-    rm -rf /var/cache/apk/* && \
+    rm -rf /var/cache/apk/* $HOME/.m2 $HOME/.zinc && \
     chown -R spark:spark $SPARK_HOME
 
-USER root
+USER spark
 WORKDIR $SPARK_HOME
 CMD ["su", "-c", "bin/spark-class org.apache.spark.deploy.master.Master", "spark"]

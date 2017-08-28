@@ -9,7 +9,8 @@ contexts:
     key_name: spark_version
     templates:
       build: >
-        docker build -t {repository}:{tag} --build-arg HADOOP_VERSION={hadoop_version}
+        docker build -t {repository}:{tag}
+          --build-arg HADOOP_VERSION={hadoop_version}
           --build-arg SPARK_VERSION={spark_version} {context}
     tags:
       '1.6.0':
@@ -43,14 +44,19 @@ contexts:
       'latest':
         spark_version: 2.2.0
   edge:
+    parameters:
+      scala_version: '2.11'
     templates:
       build: >
-        docker build -t {repository}:{tag} --build-arg HADOOP_VERSION={hadoop_version}
+        docker build -t {repository}:{tag}
+          --build-arg HADOOP_VERSION={hadoop_version}
+          --build-arg SCALA_VERSION={scala_version}
           --build-arg SPARK_BRANCH={branch} {context}
     tags:
       edge-1.6:
         branch: branch-1.6
         hadoop_version: 2.6.5
+        scala_version: '2.10'
       edge-2.0:
         branch: branch-2.0
       edge-2.1:
