@@ -12,7 +12,7 @@ ENV HADOOP_HOME /opt/hadoop
 ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ENV PATH $PATH:$HADOOP_HOME/bin
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$HADOOP_HOME/lib/native
-ARG HADOOP_VERSION=2.7.3
+ARG HADOOP_VERSION=2.7.4
 RUN mkdir -p $HADOOP_HOME && \
     apk add --no-cache --update wget && \
     wget -q -O- --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 \

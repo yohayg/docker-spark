@@ -1,7 +1,7 @@
 defaults:
   parameters:
     repository: aa8y/spark
-    hadoop_version: 2.7.3
+    hadoop_version: 2.7.4
   templates:
     push: docker push {repository}:{tag}
 contexts:
