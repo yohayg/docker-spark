@@ -1,9 +1,8 @@
-FROM openjdk:8-jdk-alpine
+FROM aa8y/core:jdk8
 
 MAINTAINER Arun Allamsetty <arun.allamsetty@gmail.com>
 
-RUN apk add --no-cache --update bash && \
-    rm -rf /var/cache/apk/*
+USER root
 
 # Hadoop
 # TODO: Move this to a different image this can use as a base.
