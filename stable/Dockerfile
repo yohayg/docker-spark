@@ -31,7 +31,7 @@ RUN mkdir -p $SPARK_HOME && \
     apk add --no-cache --update wget && \
     export SPARK_PACKAGE=spark-${SPARK_VERSION}-bin-hadoop$(echo $HADOOP_VERSION | sed 's/\.[0-9]$//g') && \
     wget -q -O- --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 0 \
-      "https://d3kbcqa49mib13.cloudfront.net/${SPARK_PACKAGE}.tgz" | \
+      "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz" | \
       tar -xz --strip 1 -C $SPARK_HOME/ && \
     apk del --purge wget && \
     rm -rf /var/cache/apk/* && \
