@@ -5,15 +5,14 @@ language: node_js
 node_js:
   - stable
 env:
-  - DAVE_VERSION=0.1.0
+  - DAVE_VERSION=0.1.1
 before_install:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   - sudo apt-get update
-  - wget -q -O- https://github.com/aa8y/dave/archive/v"$DAVE_VERSION".tar.gz | tar -xvz
 install:
   - sudo apt-get -y install docker-ce
-  - npm install -g dave-"$DAVE_VERSION"
+  - npm install -g dave@"$DAVE_VERSION"
 before_script:
   - dave build --context stable
 script:
