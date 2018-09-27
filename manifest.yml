@@ -29,6 +29,7 @@ contexts:
       '2.2.0':
       '2.2.1':
       '2.3.0':
+      '2.3.1':
       '1.6':
         hadoop_version: 2.6.5
         spark_version: 1.6.3
@@ -42,11 +43,11 @@ contexts:
       '2.2':
         spark_version: 2.2.1
       '2.3':
-        spark_version: 2.3.0
+        spark_version: 2.3.1
       '2':
-        spark_version: 2.3.0
+        spark_version: 2.3.1
       'latest':
-        spark_version: 2.3.0
+        spark_version: 2.3.1
   edge:
     parameters:
       scala_version: '2.11'
