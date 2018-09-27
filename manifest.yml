@@ -1,6 +1,6 @@
 parameters:
   repository: aa8y/spark
-  hadoop_version: 2.7.5
+  hadoop_version: 2.7.7
 templates:
   push: docker push {{{repository}}}:{{tag}}
   test: docker run --rm {{{repository}}}:{{tag}} spark-shell --version
