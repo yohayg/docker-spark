@@ -1,6 +1,6 @@
 parameters:
   repository: aa8y/spark
-  hadoop_version: 2.7.5
+  hadoop_version: 2.7.7
 templates:
   push: docker push {{{repository}}}:{{tag}}
   test: docker run --rm {{{repository}}}:{{tag}} spark-shell --version
@@ -30,6 +30,7 @@ contexts:
       '2.2.1':
       '2.3.0':
       '2.3.1':
+      '2.3.2':
       '1.6':
         hadoop_version: 2.6.5
         spark_version: 1.6.3
@@ -43,11 +44,11 @@ contexts:
       '2.2':
         spark_version: 2.2.1
       '2.3':
-        spark_version: 2.3.1
+        spark_version: 2.3.2
       '2':
-        spark_version: 2.3.1
+        spark_version: 2.3.2
       'latest':
-        spark_version: 2.3.1
+        spark_version: 2.3.2
   edge:
     parameters:
       scala_version: '2.11'
